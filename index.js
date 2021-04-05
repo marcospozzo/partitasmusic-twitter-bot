@@ -15,7 +15,7 @@ client.once("ready", () => {
 // const random = (min, max) => Math.floor(Math.random() * (max - min)) + min;
 // 0-59/6 // this divides the interval 0-59 into 6 parts
 
-const task = cron.schedule("* * * * *", () => {
+const task = cron.schedule("0 * * * *", () => {
   getAphorism()
     .then((aphorism) => {
       console.log(`"${aphorism}"`);
