@@ -25,7 +25,7 @@ const task = cron.schedule("0 15 * * *", () => {
     .then((aphorism) => {
       console.log(`"${aphorism}"`);
       const channel = client.channels.cache.find(
-        (channel) => channel.name === "📰gc-daily-aphorism"
+        (channel) => channel.name === "📰daily-gc-aphorism"
       );
       //   console.log(client.channels.cache);
       channel.send(`"${aphorism}"`);
