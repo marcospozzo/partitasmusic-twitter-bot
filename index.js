@@ -1,25 +1,10 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
 const T = require("./twit");
-const prefix = require("./config.json");
 const cron = require("node-cron");
 const fetch = require("node-fetch");
 const dotenv = require("dotenv");
 dotenv.config();
-
-client.once("ready", () => {
-  console.log("Discord ready!");
-});
-
-client.on("message", (message) => {
-  if (message.content === `${prefix}ping`) {
-    // send back "Pong." to the channel the message was sent in
-    message.channel.send("Pong.");
-  }
-});
-
-// const random = (min, max) => Math.floor(Math.random() * (max - min)) + min;
-// 0-59/6 // this divides the interval 0-59 into 6 parts
 
 const task = cron.schedule("0 15 * * *", () => {
   getAphorism()
@@ -31,7 +16,7 @@ const task = cron.schedule("0 15 * * *", () => {
       const channel = client.channels.cache.find(
         (channel) => channel.name === "📰daily-gc-aphorism"
       );
-      channel.send(aphorismWithQuotes);
+      channel.send(`*${aphorismWithQuotes}*`); // * makes it italics
 
       // Twitter
       T.post(
@@ -59,5 +44,9 @@ async function getAphorism() {
   const aphorism = await response.text();
   return aphorism;
 }
+
+client.once("ready", () => {
+  console.log("Discord ready!");
+});
 
 client.login(process.env.DISCORD_TOKEN);
