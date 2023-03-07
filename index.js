@@ -31,7 +31,7 @@ const sendAphorism = async () => {
     const discordChannel = discordClient.channels.cache.find(
       (channel) => channel.name === "📰daily-gc-aphorism"
     );
-    // await discordChannel.send(`*${aphorismWithQuotes}*`); // * makes it italics
+    await discordChannel.send(`*${aphorismWithQuotes}*`); // * makes it italics
 
     // Twitter
     await twitterClient.post("statuses/update", {
@@ -42,4 +42,4 @@ const sendAphorism = async () => {
   }
 };
 
-export default sendAphorism;
+module.exports = sendAphorism;
