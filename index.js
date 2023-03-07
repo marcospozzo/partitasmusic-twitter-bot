@@ -33,9 +33,6 @@ const sendAphorism = async () => {
     );
     await discordChannel.send(`*${aphorismWithQuotes}*`); // * makes it italics
 
-    // const discordUser = await discordClient.users.fetch("690036023421304940");
-    // await discordUser.send(`Test message: *${aphorismWithQuotes}*`);
-
     // Twitter
     await twitterClient.post("statuses/update", {
       status: aphorismWithQuotes,
@@ -44,10 +41,5 @@ const sendAphorism = async () => {
     console.error("Error fetching or sending aphorism", error);
   }
 };
-
-// const task = cron.schedule("0 15 * * *", sendAphorism, {
-//   scheduled: true, // default
-//   // timezone: "America/Argentina/Buenos_Aires",
-// });
 
 module.exports = { sendAphorism };
