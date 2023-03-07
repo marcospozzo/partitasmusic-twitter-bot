@@ -42,4 +42,4 @@ const sendAphorism = async () => {
   }
 };
 
-module.exports = sendAphorism;
+export default sendAphorism;
