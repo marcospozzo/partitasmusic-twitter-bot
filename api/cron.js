@@ -1,6 +1,7 @@
 import sendAphorism from "../index.js";
 
-export default function (req, res) {
-  sendAphorism();
+export default async function (req, res) {
+  await sendAphorism();
+  console.log("Cron job executed successfully!");
   res.status(200).send("Cron job executed successfully!");
 }
