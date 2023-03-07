@@ -27,16 +27,16 @@ const sendAphorism = async () => {
     const aphorismWithQuotes = `"${aphorism}"`;
     console.log(aphorismWithQuotes);
 
+    // Twitter
+    await twitterClient.post("statuses/update", {
+      status: aphorismWithQuotes,
+    });
+
     // Discord
     const discordChannel = discordClient.channels.cache.find(
       (channel) => channel.name === "📰daily-gc-aphorism"
     );
     await discordChannel.send(`*${aphorismWithQuotes}*`); // * makes it italics
-
-    // Twitter
-    await twitterClient.post("statuses/update", {
-      status: aphorismWithQuotes,
-    });
   } catch (error) {
     console.error("Error fetching or sending aphorism", error);
   }
