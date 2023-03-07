@@ -1,8 +1,8 @@
 {
   "crons": [
     {
-      "path": "/index/sendAphorism",
-      "schedule": "0 15 * * *"
+      "path": "/api/cron",
+      "schedule": "0 12 * * *"
     }
   ]
 }
