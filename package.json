@@ -16,5 +16,6 @@
     "node-cron": "^3.0.0",
     "node-fetch": "^2.6.1",
     "twit": "^2.2.11"
-  }
+  }, 
+  "type": "module"
 }
