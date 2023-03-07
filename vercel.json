@@ -5,7 +5,6 @@
       "schedule": "0 12 * * *"
     }
   ], 
-  "type": "webpack",
   "functions": {
     "index": {
       "handler": "index.handler",
