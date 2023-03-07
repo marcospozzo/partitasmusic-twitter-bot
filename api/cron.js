@@ -1,4 +1,4 @@
-const sendAphorism = require("../index.js");
+import sendAphorism from "../index.js";
 
 export default async function (req, res) {
   await sendAphorism();
