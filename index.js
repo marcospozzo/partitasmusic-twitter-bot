@@ -1,52 +1,53 @@
-const Discord = require("discord.js");
-const client = new Discord.Client();
-const T = require("./twit");
 const cron = require("node-cron");
 const fetch = require("node-fetch");
+const Discord = require("discord.js");
+const Twit = require("twit");
 const dotenv = require("dotenv");
 dotenv.config();
 
-const task = cron.schedule("0 15 * * *", () => {
-  getAphorism()
-    .then((aphorism) => {
-      const aphorismWithQuotes = `"${aphorism}"`;
-      console.log(aphorismWithQuotes);
-
-      // Discord
-      const channel = client.channels.cache.find(
-        (channel) => channel.name === "📰daily-gc-aphorism"
-      );
-      channel.send(`*${aphorismWithQuotes}*`); // * makes it italics
-
-      // Twitter
-      T.post(
-        "statuses/update",
-        { status: aphorismWithQuotes },
-        function (err, data, response) {
-          if (err) {
-            console.error(err);
-          }
-        }
-      );
-    })
-    .catch((error) => {
-      console.log("error fetching aphorism");
-      console.error(error);
-    }),
-    {
-      scheduled: true, // default
-      //   timezone: "America/Argentina/Buenos_Aires",
-    };
-});
-
-async function getAphorism() {
-  const response = await fetch("https://partitasmusic.com/api/aphorism");
-  const aphorism = await response.text();
-  return aphorism;
-}
-
-client.once("ready", () => {
+const discordClient = new Discord.Client();
+discordClient.once("ready", () => {
   console.log("Discord ready!");
 });
 
-client.login(process.env.DISCORD_TOKEN);
+discordClient.login(process.env.DISCORD_TOKEN);
+
+const twitterClient = new Twit({
+  consumer_key: process.env.TWITTER_CONSUMER_KEY,
+  consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+  access_token: process.env.TWITTER_ACCESS_TOKEN,
+  access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
+});
+
+const sendAphorism = async () => {
+  try {
+    const response = await fetch("https://partitasmusic.com/api/aphorism");
+    const aphorism = await response.text();
+
+    const aphorismWithQuotes = `"${aphorism}"`;
+    console.log(aphorismWithQuotes);
+
+    // Discord
+    const discordChannel = discordClient.channels.cache.find(
+      (channel) => channel.name === "📰daily-gc-aphorism"
+    );
+    await discordChannel.send(`*${aphorismWithQuotes}*`); // * makes it italics
+
+    // const discordUser = await discordClient.users.fetch("690036023421304940");
+    // await discordUser.send(`Test message: *${aphorismWithQuotes}*`);
+
+    // Twitter
+    await twitterClient.post("statuses/update", {
+      status: aphorismWithQuotes,
+    });
+  } catch (error) {
+    console.error("Error fetching or sending aphorism", error);
+  }
+};
+
+const task = cron.schedule("0 15 * * *", sendAphorism, {
+  scheduled: true, // default
+  // timezone: "America/Argentina/Buenos_Aires",
+});
+
+module.exports = { sendAphorism };

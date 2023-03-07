@@ -1,0 +1,16 @@
+{
+    "build": {
+      "env": {
+        "CRON_SCHEDULE": "0 15 * * *",
+        "TZ": "America/Argentina/Buenos_Aires"
+      },
+      "functions": {
+        "worker": {
+          "memory": 128,
+          "runtime": "nodejs14",
+          "entrypoint": "index.sendAphorism"
+        }
+      }
+    }
+  }
+  
