@@ -7,7 +7,6 @@
   ], 
   "functions": {
     "index": {
-      "handler": "index",
       "memory": 512,
       "runtime": "nodejs16"
     }
