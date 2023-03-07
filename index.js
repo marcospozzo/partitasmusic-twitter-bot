@@ -45,9 +45,9 @@ const sendAphorism = async () => {
   }
 };
 
-const task = cron.schedule("0 15 * * *", sendAphorism, {
-  scheduled: true, // default
-  // timezone: "America/Argentina/Buenos_Aires",
-});
+// const task = cron.schedule("0 15 * * *", sendAphorism, {
+//   scheduled: true, // default
+//   // timezone: "America/Argentina/Buenos_Aires",
+// });
 
 module.exports = { sendAphorism };
