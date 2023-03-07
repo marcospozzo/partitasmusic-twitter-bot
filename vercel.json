@@ -4,5 +4,13 @@
       "path": "/api/cron",
       "schedule": "0 12 * * *"
     }
-  ]
+  ], 
+  "type": "webpack",
+  "functions": {
+    "index": {
+      "handler": "index.handler",
+      "memory": 512,
+      "runtime": "nodejs16"
+    }
+  }
 }
